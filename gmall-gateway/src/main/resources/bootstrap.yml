@@ -1,9 +1,7 @@
 spring:
   application:
-    name: gateway-service
+    name: gateway-api
   cloud:
     nacos:
       config:
-        server-addr: localhost:8848
-        namespace: 6607dbf0-f07e-4d96-a106-9869bde7225e
-        file-extension: yml
+        server-addr: 127.0.0.1:8848

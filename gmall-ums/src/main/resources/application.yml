@@ -29,13 +29,13 @@
 #      probability: 1
 #
 #mybatis-plus:
-#  mapper-locations: classpath:mapper/ums/*.xml  # ¶ÁÈ¡Ó³ÉäÎÄ¼ş
+#  mapper-locations: classpath:mapper/ums/*.xml  # è¯»å–æ˜ å°„æ–‡ä»¶
 #  type-aliases-package: com.atguigu.gmall.ums.entity
 #  global-config:
 #    db-config:
-#      id-type: auto  # Ä¬ÈÏÊ¹ÓÃÊı¾İ¿â×ÔÔö
+#      id-type: auto  # é»˜è®¤ä½¿ç”¨æ•°æ®åº“è‡ªå¢
 #
-## ¿ªÆôfegin ÕûºÏ sentinel ÊµÏÖ·şÎñÈÛ¶ÏµÄÖ§³Ö
+## å¼€å¯fegin æ•´åˆ sentinel å®ç°æœåŠ¡ç†”æ–­çš„æ”¯æŒ
 #feign:
 #  sentinel:
 #    enabled: true
