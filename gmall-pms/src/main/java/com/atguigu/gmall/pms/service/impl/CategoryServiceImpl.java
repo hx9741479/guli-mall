@@ -10,6 +10,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryEntity> implements CategoryService {
@@ -22,6 +24,20 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryEnt
         );
 
         return new PageResultVo(page);
+    }
+
+    @Override
+    public List<CategoryEntity> queryCategory(Long parentId) {
+        QueryWrapper<CategoryEntity> queryWrapper = new QueryWrapper<>();
+        // 如果parentId为-1，说明用户没有传该字段，查询所有
+        List<CategoryEntity> categoryEntities;
+        if(parentId == -1){
+            categoryEntities = this.list();
+            return categoryEntities;
+        }
+        queryWrapper.eq("parent_id",parentId);
+        categoryEntities = baseMapper.selectList(queryWrapper);
+        return categoryEntities;
     }
 
 }

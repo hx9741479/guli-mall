@@ -15,5 +15,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface AttrGroupService extends IService<AttrGroupEntity> {
 
     PageResultVo queryPage(PageParamVo paramVo);
+
 }
 

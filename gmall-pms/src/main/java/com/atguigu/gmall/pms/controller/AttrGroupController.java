@@ -5,6 +5,7 @@ import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.pms.entity.AttrGroupEntity;
 import com.atguigu.gmall.pms.service.AttrGroupService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,21 @@ public class AttrGroupController {
 
     @Autowired
     private AttrGroupService attrGroupService;
+
+
+    /**
+     *  根据类别id查询属性分组信息
+     * @param cid
+     * @return
+     */
+    @GetMapping("category/{cid}")
+    @ApiOperation("根据类别id查询")
+    public ResponseVo<List<AttrGroupEntity>> queryAttrGroupByCid(@PathVariable("cid") Integer cid){
+        List<AttrGroupEntity> attrGroupEntities = this.attrGroupService.list(new QueryWrapper<AttrGroupEntity>().eq("category_id", cid));
+
+        return ResponseVo.ok(attrGroupEntities);
+    }
+
 
     /**
      * 列表
