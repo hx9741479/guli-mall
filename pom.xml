@@ -21,7 +21,8 @@
 		<module>gmall-common</module>
 		<module>gmall-pms</module>
 		<module>gmall-ums</module>
-	</modules>
+        <module>gmall-sms-interface</module>
+    </modules>
 
 	<properties>
 		<spring-cloud.version>Hoxton.SR2</spring-cloud.version>

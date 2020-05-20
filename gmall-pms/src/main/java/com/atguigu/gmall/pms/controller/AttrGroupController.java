@@ -4,6 +4,7 @@ import com.atguigu.gmall.common.bean.PageParamVo;
 import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.pms.entity.AttrGroupEntity;
+import com.atguigu.gmall.pms.entity.vo.GroupVo;
 import com.atguigu.gmall.pms.service.AttrGroupService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
@@ -28,6 +29,12 @@ public class AttrGroupController {
     @Autowired
     private AttrGroupService attrGroupService;
 
+    @ApiOperation("根据三级分类id查询分组及组下的规格参数")
+    @GetMapping("/withattrs/{catId}")
+    public ResponseVo<List<GroupVo>> queryInfoByCategoryId(@PathVariable("catId")Long catId){
+        List<GroupVo> allInfo = this.attrGroupService.queryCategoryAndAttrsByCategoryId(catId);
+        return ResponseVo.ok(allInfo);
+    }
 
     /**
      *  根据类别id查询属性分组信息

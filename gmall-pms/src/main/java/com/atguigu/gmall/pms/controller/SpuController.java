@@ -4,6 +4,7 @@ import com.atguigu.gmall.common.bean.PageParamVo;
 import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.pms.entity.SpuEntity;
+import com.atguigu.gmall.pms.entity.vo.SpuVo;
 import com.atguigu.gmall.pms.service.SpuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +27,13 @@ public class SpuController {
 
     @Autowired
     private SpuService spuService;
+
+    @ApiOperation("spu商品信息查询")
+    @GetMapping("category/{categoryId}")
+    public ResponseVo<PageResultVo> querySpuInfo(@PathVariable("categoryId")Long categoryId,PageParamVo pageParamVo){
+        PageResultVo pageResultVo = this.spuService.querySpuInfo(pageParamVo, categoryId);
+        return ResponseVo.ok(pageResultVo);
+    }
 
     /**
      * 列表
@@ -55,10 +63,10 @@ public class SpuController {
      */
     @PostMapping
     @ApiOperation("保存")
-    public ResponseVo<Object> save(@RequestBody SpuEntity spu){
-		spuService.save(spu);
+    public ResponseVo<Object> save(@RequestBody SpuVo spuVo){
+		spuService.bigSave(spuVo);
 
-        return ResponseVo.ok();
+        return ResponseVo.ok("保存成功!!");
     }
 
     /**
