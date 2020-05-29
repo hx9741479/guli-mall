@@ -5,6 +5,8 @@ import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.pms.entity.SkuAttrValueEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * sku销售属性&值
  *
@@ -15,5 +17,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface SkuAttrValueService extends IService<SkuAttrValueEntity> {
 
     PageResultVo queryPage(PageParamVo paramVo);
+
+    List<SkuAttrValueEntity> querySearchAttrValueBySkuId(Long skuId);
 }
 

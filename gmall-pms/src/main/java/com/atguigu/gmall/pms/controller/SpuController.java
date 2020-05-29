@@ -29,6 +29,15 @@ public class SpuController {
     @Autowired
     private SpuService spuService;
 
+    @PostMapping("page")
+    @ApiOperation("分页查询feign")
+    public ResponseVo<List<SpuEntity>> querySpuPage(@RequestBody PageParamVo pageParamVo){
+        PageResultVo pageResultVo = spuService.queryPage(pageParamVo);
+        List<SpuEntity> list = (List<SpuEntity>)pageResultVo.getList();
+        return ResponseVo.ok(list);
+
+    }
+
     @ApiOperation("spu商品信息查询")
     @GetMapping("category/{categoryId}")
     public ResponseVo<PageResultVo> querySpuInfo(@PathVariable("categoryId")Long categoryId,PageParamVo pageParamVo){

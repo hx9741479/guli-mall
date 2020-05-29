@@ -8,11 +8,17 @@ import com.atguigu.gmall.pms.service.SpuAttrValueService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service("spuAttrValueService")
 public class SpuAttrValueServiceImpl extends ServiceImpl<SpuAttrValueMapper, SpuAttrValueEntity> implements SpuAttrValueService {
+
+    @Autowired
+    SpuAttrValueMapper spuAttrValueMapper;
 
     @Override
     public PageResultVo queryPage(PageParamVo paramVo) {
@@ -22,6 +28,11 @@ public class SpuAttrValueServiceImpl extends ServiceImpl<SpuAttrValueMapper, Spu
         );
 
         return new PageResultVo(page);
+    }
+
+    @Override
+    public List<SpuAttrValueEntity> querySearchAttrValueBySpuId(Long spuId) {
+        return this.spuAttrValueMapper.querySpuAttrValuesBySpuId(spuId);
     }
 
 }
