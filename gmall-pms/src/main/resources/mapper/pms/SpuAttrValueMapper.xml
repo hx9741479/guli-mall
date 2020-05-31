@@ -3,11 +3,14 @@
 <mapper namespace="com.atguigu.gmall.pms.mapper.SpuAttrValueMapper">
 
     <select id="querySpuAttrValuesBySpuId" resultType="com.atguigu.gmall.pms.entity.SpuAttrValueEntity">
-        select a.id,a.attr_id,a.attr_name,a.attr_value,a.spu_id
+        select a.*
         from pms_spu_attr_value a
         inner join pms_attr b
         on a.attr_id = b.id
         where a.spu_id = #{spuId}
         and b.search_type = 1
     </select>
+
+
+
 </mapper>

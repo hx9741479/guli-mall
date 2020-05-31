@@ -29,7 +29,7 @@ spring:
       probability: 1
 
 mybatis-plus:
-  mapper-locations: classpath:mapper/pms/*.xml  # 读取映射文件
+  mapper-locations: classpath:/mapper/pms/*.xml
   type-aliases-package: com.atguigu.gmall.pms.entity
   global-config:
     db-config:

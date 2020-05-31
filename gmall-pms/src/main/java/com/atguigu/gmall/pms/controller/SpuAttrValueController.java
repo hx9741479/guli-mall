@@ -29,7 +29,7 @@ public class SpuAttrValueController {
 
     @ApiOperation("根据spuId查询检索属性及值")
     @GetMapping("spu/{spuId}")
-    public ResponseVo<List<SpuAttrValueEntity>> querySearchAttrValueBySpuId(@PathVariable Long spuId){
+    public ResponseVo<List<SpuAttrValueEntity>> querySearchAttrValueBySpuId(@PathVariable("spuId") Long spuId){
         List<SpuAttrValueEntity> attrValueEntities = spuAttrValueService.querySearchAttrValueBySpuId(spuId);
 
         return ResponseVo.ok(attrValueEntities);

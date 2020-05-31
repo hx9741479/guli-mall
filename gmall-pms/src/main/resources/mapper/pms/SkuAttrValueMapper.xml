@@ -3,11 +3,12 @@
 <mapper namespace="com.atguigu.gmall.pms.mapper.SkuAttrValueMapper">
 
     <select id="querySearchAttrValueBySkuId" resultType="com.atguigu.gmall.pms.entity.SkuAttrValueEntity">
-        select a.id,a.attr_id,a.attr_name,a.attr_value,a.sku_id
+        select a.*
         from pms_sku_attr_value a
         inner join pms_attr b
         on a.attr_id = b.id
         where a.sku_id = #{skuId}
-        and b.search_type = 0;
+        and b.search_type = 1
+
     </select>
 </mapper>
