@@ -24,6 +24,8 @@ spring:
       uris: http://192.168.181.128:9200
   jackson:
     default-property-inclusion: non_null
+  thymeleaf:
+    cache: false
 
 feign:
   sentinel:
@@ -32,5 +34,4 @@ feign:
 logging:
   level:
     com.atguigu.gmall: debug
-
 

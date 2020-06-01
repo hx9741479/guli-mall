@@ -159,7 +159,7 @@ public class SearchServiceImpl implements SearchService {
                 //获取规格参数子聚合
                 ParsedStringTerms attrValueAgg = ((Terms.Bucket) bucket).getAggregations().get("attrValueAgg");
                 List<? extends Terms.Bucket> attrValueAggBuckets = attrValueAgg.getBuckets();
-                if(CollectionUtils.isEmpty(attrValueAggBuckets)){
+                if(!CollectionUtils.isEmpty(attrValueAggBuckets)){
                     List<String> attrValues = attrValueAggBuckets.stream().map(Terms.Bucket::getKeyAsString).collect(Collectors.toList());
                     searchResponseAttrVo.setAttrValues(attrValues);
                 }
@@ -235,18 +235,18 @@ public class SearchServiceImpl implements SearchService {
             });
         }
         sourceBuilder.query(boolQueryBuilder);
-        // 2. 构建排序 0-默认，得分降序；1-按价格升序；2-按价格降序；3-按创建时间降序；4-按销量降序
+        // 2. 构建排序 0-默认，得分降序；1-按价格降序；2-按价格升序；3-按创建时间降序；4-按销量降序
         Integer sort = searchParamVo.getSort();
         String field = "";
         SortOrder order = null;
         switch (sort) {
             case 1:
                 field = "price";
-                order = SortOrder.ASC;
+                order = SortOrder.DESC;
                 break;
             case 2:
                 field = "price";
-                order = SortOrder.DESC;
+                order = SortOrder.ASC;
                 break;
             case 3:
                 field = "createTime";
@@ -287,7 +287,7 @@ public class SearchServiceImpl implements SearchService {
                 )
         );
         // 6. 构建结果集过滤
-        sourceBuilder.fetchSource(new String[]{"skuId", "title", "price", "defaultImage"}, null);
+        sourceBuilder.fetchSource(new String[]{"skuId", "title", "price", "defaultImage","subTitle"}, null);
         System.out.println(sourceBuilder.toString());
         return sourceBuilder;
     }
