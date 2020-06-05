@@ -37,4 +37,14 @@ public class GmallPmsFallBack implements GmallPmsClient {
     public ResponseVo<List<SpuAttrValueEntity>> querySearchAttrValueBySpuId(Long spuId) {
         return ResponseVo.fail("熔断保护");
     }
+
+    @Override
+    public ResponseVo<List<CategoryEntity>> queryCategory(Long parentId) {
+        return ResponseVo.fail("熔断保护");
+    }
+
+    @Override
+    public ResponseVo<List<CategoryEntity>> queryCategoriesWithSub(Long pid) {
+        return ResponseVo.fail("熔断保护");
+    }
 }
