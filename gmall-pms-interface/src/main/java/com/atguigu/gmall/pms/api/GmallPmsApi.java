@@ -31,4 +31,13 @@ public interface GmallPmsApi {
     @GetMapping("pms/spuattrvalue/spu/{spuId}")
     ResponseVo<List<SpuAttrValueEntity>> querySearchAttrValueBySpuId(@PathVariable Long spuId);
 
+    //传0查询一级分类
+    @GetMapping("pms/category/parent/{parentId}")
+    ResponseVo<List<CategoryEntity>> queryCategory(@PathVariable("parentId") Long parentId);
+
+    //查询二级分类以及二级分类下的三级分类
+    @GetMapping("pms/category/subs/{pid}")
+    ResponseVo<List<CategoryEntity>> queryCategoriesWithSub(@PathVariable("pid")Long pid);
+
+
     }

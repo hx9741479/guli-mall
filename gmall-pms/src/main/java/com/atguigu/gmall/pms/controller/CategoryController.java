@@ -91,4 +91,10 @@ public class CategoryController {
         return ResponseVo.ok();
     }
 
+    @GetMapping("subs/{pid}")
+    public ResponseVo<List<CategoryEntity>> queryCategoriesWithSub(@PathVariable("pid")Long pid){
+        List<CategoryEntity> categoryEntityList = this.categoryService.queryCategoriesWithSub(pid);
+        return ResponseVo.ok(categoryEntityList);
+    }
+
 }

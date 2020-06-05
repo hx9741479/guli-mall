@@ -40,4 +40,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryEnt
         return categoryEntities;
     }
 
+    @Override
+    public List<CategoryEntity> queryCategoriesWithSub(Long pid) {
+       List<CategoryEntity> categoryEntityList =  this.baseMapper.queryCategoriesByPid(pid);
+        return categoryEntityList;
+    }
 }
