@@ -18,6 +18,13 @@ public class IndexController {
     @Autowired
     private IndexService indexService;
 
+    @ResponseBody
+    @GetMapping("/index/testlock")
+    public String testLock(){
+        indexService.testLock();
+        return "ok";
+    }
+
     @GetMapping("/index/cates")
     public String toIndex(Model model){
 
@@ -37,7 +44,6 @@ public class IndexController {
     @ResponseBody
     @GetMapping("/index/cates/{pid}")
     public ResponseVo<List<CategoryEntity>> queryLvl2CategoriesWithSub(@PathVariable("pid")Long pid){
-
         List<CategoryEntity> categoryEntities = this.indexService.queryLvl2CategoriesWithSub(pid);
         return ResponseVo.ok(categoryEntities);
     }
