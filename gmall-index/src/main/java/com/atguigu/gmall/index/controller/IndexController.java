@@ -19,10 +19,19 @@ public class IndexController {
     private IndexService indexService;
 
     @ResponseBody
-    @GetMapping("/index/testlock")
-    public String testLock(){
-        indexService.testLock();
-        return "ok";
+    @GetMapping("/index/read")
+    public ResponseVo<String> read(){
+        String msg = indexService.readLock();
+
+        return ResponseVo.ok(msg);
+    }
+
+    @ResponseBody
+    @GetMapping("/index/write")
+    public ResponseVo<String> write(){
+        String msg = indexService.writeLock();
+
+        return ResponseVo.ok(msg);
     }
 
     @GetMapping("/index/cates")

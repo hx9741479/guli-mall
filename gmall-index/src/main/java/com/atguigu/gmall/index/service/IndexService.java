@@ -13,4 +13,8 @@ public interface IndexService {
     List<CategoryEntity> queryLvl2CategoriesWithSub(Long pid);
 
     void testLock();
+
+    String readLock();
+
+    String writeLock();
 }
