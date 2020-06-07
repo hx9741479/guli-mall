@@ -97,4 +97,10 @@ public class CategoryController {
         return ResponseVo.ok(categoryEntityList);
     }
 
+    @GetMapping("all/{cid3}")
+    public ResponseVo<List<CategoryEntity>> queryCategoriesByCid3(@PathVariable("cid3")Long cid3){
+        List<CategoryEntity> itemCategoryVos = this.categoryService.queryCategoriesByCid3(cid3);
+        return ResponseVo.ok(itemCategoryVos);
+    }
+
 }

@@ -11,4 +11,27 @@
         and b.search_type = 1
 
     </select>
+    <select id="querySearchAttrValueBySpuId" resultType="com.atguigu.gmall.pms.entity.SkuAttrValueEntity">
+        SELECT
+            a.attr_id,
+            attr_name,
+            a.attr_value
+        FROM
+            pms_sku_attr_value a
+            INNER JOIN pms_sku b ON a.sku_id = b.id
+        WHERE
+            spu_id = #{spuId}
+    </select>
+    <select id="querySkusJsonBySpuId" resultType="java.util.Map">
+        SELECT
+            GROUP_CONCAT( a.attr_value ) AS attr_values,
+            a.sku_id
+        FROM
+            pms_sku_attr_value a
+            INNER JOIN pms_sku b ON a.sku_id = b.id
+        WHERE
+            b.spu_id = #{spuId}
+        GROUP BY
+            a.sku_id
+    </select>
 </mapper>

@@ -6,6 +6,7 @@ import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.pms.entity.AttrGroupEntity;
 import com.atguigu.gmall.pms.entity.vo.GroupVo;
 import com.atguigu.gmall.pms.service.AttrGroupService;
+import com.atguigu.gmall.pms.vo.ItemGroupVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,19 +32,20 @@ public class AttrGroupController {
 
     @ApiOperation("根据三级分类id查询分组及组下的规格参数")
     @GetMapping("/withattrs/{catId}")
-    public ResponseVo<List<GroupVo>> queryInfoByCategoryId(@PathVariable("catId")Long catId){
+    public ResponseVo<List<GroupVo>> queryInfoByCategoryId(@PathVariable("catId") Long catId) {
         List<GroupVo> allInfo = this.attrGroupService.queryCategoryAndAttrsByCategoryId(catId);
         return ResponseVo.ok(allInfo);
     }
 
     /**
-     *  根据类别id查询属性分组信息
+     * 根据类别id查询属性分组信息
+     *
      * @param cid
      * @return
      */
     @GetMapping("category/{cid}")
     @ApiOperation("根据类别id查询")
-    public ResponseVo<List<AttrGroupEntity>> queryAttrGroupByCid(@PathVariable("cid") Integer cid){
+    public ResponseVo<List<AttrGroupEntity>> queryAttrGroupByCid(@PathVariable("cid") Integer cid) {
         List<AttrGroupEntity> attrGroupEntities = this.attrGroupService.list(new QueryWrapper<AttrGroupEntity>().eq("category_id", cid));
 
         return ResponseVo.ok(attrGroupEntities);
@@ -55,7 +57,7 @@ public class AttrGroupController {
      */
     @GetMapping
     @ApiOperation("分页查询")
-    public ResponseVo<PageResultVo> queryAttrGroupByPage(PageParamVo paramVo){
+    public ResponseVo<PageResultVo> queryAttrGroupByPage(PageParamVo paramVo) {
         PageResultVo pageResultVo = attrGroupService.queryPage(paramVo);
 
         return ResponseVo.ok(pageResultVo);
@@ -67,8 +69,8 @@ public class AttrGroupController {
      */
     @GetMapping("{id}")
     @ApiOperation("详情查询")
-    public ResponseVo<AttrGroupEntity> queryAttrGroupById(@PathVariable("id") Long id){
-		AttrGroupEntity attrGroup = attrGroupService.getById(id);
+    public ResponseVo<AttrGroupEntity> queryAttrGroupById(@PathVariable("id") Long id) {
+        AttrGroupEntity attrGroup = attrGroupService.getById(id);
 
         return ResponseVo.ok(attrGroup);
     }
@@ -78,8 +80,8 @@ public class AttrGroupController {
      */
     @PostMapping
     @ApiOperation("保存")
-    public ResponseVo<Object> save(@RequestBody AttrGroupEntity attrGroup){
-		attrGroupService.save(attrGroup);
+    public ResponseVo<Object> save(@RequestBody AttrGroupEntity attrGroup) {
+        attrGroupService.save(attrGroup);
 
         return ResponseVo.ok();
     }
@@ -89,8 +91,8 @@ public class AttrGroupController {
      */
     @PostMapping("/update")
     @ApiOperation("修改")
-    public ResponseVo update(@RequestBody AttrGroupEntity attrGroup){
-		attrGroupService.updateById(attrGroup);
+    public ResponseVo update(@RequestBody AttrGroupEntity attrGroup) {
+        attrGroupService.updateById(attrGroup);
 
         return ResponseVo.ok();
     }
@@ -100,10 +102,19 @@ public class AttrGroupController {
      */
     @PostMapping("/delete")
     @ApiOperation("删除")
-    public ResponseVo delete(@RequestBody List<Long> ids){
-		attrGroupService.removeByIds(ids);
+    public ResponseVo delete(@RequestBody List<Long> ids) {
+        attrGroupService.removeByIds(ids);
 
         return ResponseVo.ok();
+    }
+
+    @GetMapping("withattrvalues")
+    public ResponseVo<List<ItemGroupVo>> queryGroupsBySpuIdAndCid(
+            @RequestParam("spuId") Long spuId,
+            @RequestParam("skuId") Long skuId,
+            @RequestParam("cid") Long cid) {
+        List<ItemGroupVo> itemGroupVos = attrGroupService.queryGroupsBySpuIdAndCid(spuId, skuId, cid);
+        return ResponseVo.ok(itemGroupVos);
     }
 
 }

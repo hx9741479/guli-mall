@@ -9,7 +9,11 @@ import java.util.List;
 
 public interface GmallWmsApi {
 
-    //5.根据skuId查询商品的库存信息 O
+    /**
+     *  5.根据skuId查询商品的库存信息 O
+     * @param skuId
+     * @return
+     */
     @GetMapping("wms/waresku/sku/{skuId}")
     ResponseVo<List<WareSkuEntity>> getWare(@PathVariable("skuId") Long skuId);
 
