@@ -1,5 +1,5 @@
 server:
-  port: 18088
+  port: 18089
 spring:
   cloud:
     nacos:
@@ -17,11 +17,16 @@ spring:
   sleuth:
     sampler:
       probability: 1
-  jackson:
-    default-property-inclusion: non_null
   thymeleaf:
     cache: false
 feign:
   sentinel:
     enabled: true
 
+jwt: # 请自己完成配置到配置中心
+  pubKeyPath: E:\workspace\java\guli-mall-server\rsa.pub
+  priKeyPath: E:\workspace\java\guli-mall-server\rsa.pri
+  secret: 23408sldjfdslDSLDJS23432sdl#()##@dlsjfdsl34
+  expire: 240
+  cookieName: GMALL-TOKEN
+  unick: unick
