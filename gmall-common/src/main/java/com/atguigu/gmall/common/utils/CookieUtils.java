@@ -157,7 +157,7 @@ public final class CookieUtils {
 	private static final String getDomainName(HttpServletRequest request) {
 		String domainName = null;
 
-//		String serverName = request.getRequestURL().toString();
+		//String serverName = request.getRequestURL().toString();
 		String serverName = request.getHeader("X-Forwarded-Host");
 
 		if (serverName == null || serverName.equals("")) {

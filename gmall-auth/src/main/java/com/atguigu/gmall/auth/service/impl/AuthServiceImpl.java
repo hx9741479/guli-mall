@@ -49,8 +49,8 @@ public class AuthServiceImpl implements AuthService {
             //5 制作jwt类型的token信息
             String token = JwtUtils.generateToken(map, this.jwtProperties.getPrivateKey(), this.jwtProperties.getExpire());
             //6 把jwt放入cookie中
-            CookieUtils.setCookie(request, response, this.jwtProperties.getCookieName(), token, this.jwtProperties.getExpire() * 60);
-            //7 用户昵称放入cookie中，方便页面展示昵称
+            CookieUtils.setCookie(request, response, this.jwtProperties.getCookieName(), token, this.jwtProperties.getExpire() * 60,"utf-8",true);
+            //7 用户昵称放入cookie中，方便页面展示昵称,这里不要设置httpOnly 这里就是要js解析的
             CookieUtils.setCookie(request,response,this.jwtProperties.getUnick(),userEntity.getNickname(),this.jwtProperties.getExpire() * 60);
         } catch (Exception e) {
             e.printStackTrace();

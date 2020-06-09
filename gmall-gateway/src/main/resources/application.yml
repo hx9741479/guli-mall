@@ -35,6 +35,8 @@ spring:
           uri: lb://index-service
           predicates:
             - Host=www.gmall.com
+          filters:
+            - Auth=/
           # - Path=/index/**  如果写在一个里面，他们的关系是and关系
         - id: index-route2 # 首页的异步请求路由
           uri: lb://index-service
@@ -48,3 +50,10 @@ spring:
           uri: lb://auth-service
           predicates:
             - Host=sso.gmall.com
+      x-forwarded:
+        enabled: true
+
+auth:
+  jwt: # 请自己完成配置到配置中心
+    pubKeyPath: E:\workspace\java\guli-mall-server\rsa.pub
+    cookieName: GMALL-TOKEN
