@@ -91,6 +91,11 @@ public class GmallPmsFallBack implements GmallPmsClient {
     }
 
     @Override
+    public ResponseVo<List<SkuAttrValueEntity>> querySkuAttrValuesBySkuId(Long skuId) {
+        return null;
+    }
+
+    @Override
     public ResponseVo<List<SkuAttrValueEntity>> querySearchAttrValuesBySkuId(Long skuId) {
         return null;
     }

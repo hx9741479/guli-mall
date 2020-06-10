@@ -1,0 +1,38 @@
+server:
+  port: 18090
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719
+  zipkin:
+    base-url: http://localhost:9411
+    discovery-client-enabled: false
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1
+  jackson:
+    default-property-inclusion: non_null
+  thymeleaf:
+    cache: false
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.181.128/guli_cart?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: 123456
+feign:
+  sentinel:
+    enabled: true
+
+jwt: # 请自己完成配置到配置中心
+  pubKeyPath: E:\workspace\java\guli-mall-server\rsa.pub
+  expire: 15552000 # userKey的过期时间
+  cookieName: GMALL-TOKEN
+  userKey: userKey
+

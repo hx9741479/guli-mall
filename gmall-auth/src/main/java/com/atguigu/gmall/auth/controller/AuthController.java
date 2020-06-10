@@ -1,6 +1,7 @@
 package com.atguigu.gmall.auth.controller;
 
 import com.atguigu.gmall.auth.service.AuthService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,9 @@ public class AuthController {
     @GetMapping("/toLogin.html")
     public String toLogin(@RequestParam(value = "returnUrl",required = false) String returnUrl, Model model) {
         // 把登录前的页面地址，记录到登录页面，以备将来登录成功，回到登录前的页面
+        if(StringUtils.isBlank(returnUrl)){
+            returnUrl = "http://www.gmall.com/index/cates";
+        }
         model.addAttribute("returnUrl", returnUrl);
         return "login";
     }
@@ -31,7 +35,6 @@ public class AuthController {
             @RequestParam("returnUrl")String returnUrl,
             HttpServletRequest request, HttpServletResponse response){
         this.authService.accredit(loginName, password, request, response);
-
         // 登录成功重定向到登录前页面
         return "redirect:" + returnUrl;
     }

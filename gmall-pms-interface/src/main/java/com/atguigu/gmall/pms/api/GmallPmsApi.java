@@ -5,6 +5,7 @@ import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.pms.entity.*;
 import com.atguigu.gmall.pms.entity.vo.ItemGroupVo;
 import com.atguigu.gmall.pms.entity.vo.SaleAttrValueVo;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -131,6 +132,11 @@ public interface GmallPmsApi {
      */
     @GetMapping("pms/skuattrvalue/spu/skus/{skuId}")
     ResponseVo<List<SkuAttrValueEntity>> querySkusBySkuId(@PathVariable("skuId") Long skuId);
+
+
+    @ApiOperation("查询sku的所有销售属性")
+    @GetMapping("pms/skuattrvalue/all/{skuId}")
+    ResponseVo<List<SkuAttrValueEntity>> querySkuAttrValuesBySkuId(@PathVariable("skuId")Long skuId);
 
 }
 

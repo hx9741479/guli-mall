@@ -6,6 +6,7 @@ import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.pms.entity.SkuAttrValueEntity;
 import com.atguigu.gmall.pms.service.SkuAttrValueService;
 import com.atguigu.gmall.pms.vo.SaleAttrValueVo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,6 +110,14 @@ public class SkuAttrValueController {
     public ResponseVo<List<SkuAttrValueEntity>> querySkusBySkuId(@PathVariable("skuId")Long skuId){
         List<SkuAttrValueEntity> skuAttrValueEntityList = this.skuAttrValueService.querySkusBySkuId(skuId);
         return ResponseVo.ok(skuAttrValueEntityList);
+    }
+
+    @ApiOperation("查询sku的所有销售属性")
+    @GetMapping("all/{skuId}")
+    public ResponseVo<List<SkuAttrValueEntity>> querySkuAttrValuesBySkuId(@PathVariable("skuId")Long skuId){
+
+        List<SkuAttrValueEntity> skuAttrValueEntities = this.skuAttrValueService.list(new QueryWrapper<SkuAttrValueEntity>().eq("sku_id", skuId));
+        return  ResponseVo.ok(skuAttrValueEntities);
     }
 
 }
