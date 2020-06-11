@@ -56,8 +56,12 @@ spring:
             - Host=cart.gmall.com
       x-forwarded:
         enabled: true
+  redis:
+    host: 192.168.181.128
+    password: 123456
 
 auth:
   jwt: # 请自己完成配置到配置中心
     pubKeyPath: E:\workspace\java\guli-mall-server\rsa.pub
     cookieName: GMALL-TOKEN
+

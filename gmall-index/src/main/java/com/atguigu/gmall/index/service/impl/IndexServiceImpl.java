@@ -28,6 +28,7 @@ public class IndexServiceImpl implements IndexService {
     @Autowired
     private RedissonClient redissonClient;
 
+
     public static final String KEY_PREFIX = "index:category:";
 
 
