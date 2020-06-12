@@ -1,6 +1,6 @@
 package com.atguigu.gmall.cart.service;
 
-import com.atguigu.gmall.cart.bean.Cart;
+import com.atguigu.gmall.cart.api.entiy.Cart;
 import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 
@@ -21,6 +21,8 @@ public interface CartService {
     void updateNum(Cart cart);
 
     void deleteCart(Long skuId);
+
+    List<Cart> queryCheckedCarts(Long userId);
 
     //void scheduledTest();
 

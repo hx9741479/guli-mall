@@ -1,11 +1,10 @@
-package com.atguigu.gmall.ums.entity;
+package com.atguigu.gmall.ums.api.vo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 
 /**
  * 收货地址表

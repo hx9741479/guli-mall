@@ -1,0 +1,50 @@
+server:
+  port: 18091
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719
+  zipkin:
+    base-url: http://localhost:9411
+    discovery-client-enabled: false
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1
+  thymeleaf:
+    cache: false
+  redis:
+    host: 192.168.181.128
+    password: 123456
+  rabbitmq:
+    listener:
+      simple:
+        acknowledge-mode: manual
+    host: 192.168.181.128
+    virtual-host: /hhxx
+    username: admin
+    password: 123456
+feign:
+  sentinel:
+    enabled: true
+logging:
+  level:
+    com.atguigu.gmall: debug
+jwt: # 请自己完成配置到配置中心
+  pubKeyPath: E:\workspace\java\guli-mall-server\rsa.pub
+  expire: 15552000 # userKey的过期时间 单位 s
+  cookieName: GMALL-TOKEN
+  userKey: userKey
+
+thread:
+  pool:
+    coreSize: 100
+    maxSize: 500
+    keepalive: 60
+    blockQueueSize: 1000

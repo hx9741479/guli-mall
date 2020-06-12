@@ -1,6 +1,6 @@
 package com.atguigu.gmall.cart.service.impl;
 
-import com.atguigu.gmall.cart.bean.Cart;
+import com.atguigu.gmall.cart.api.entiy.Cart;
 import com.atguigu.gmall.cart.mapper.CartMapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;

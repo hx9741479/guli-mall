@@ -1,7 +1,7 @@
 package com.atguigu.gmall.cart.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.atguigu.gmall.cart.bean.Cart;
+import com.atguigu.gmall.cart.api.entiy.Cart;
 import com.atguigu.gmall.cart.bean.UserInfo;
 import com.atguigu.gmall.cart.feign.GmallPmsClient;
 import com.atguigu.gmall.cart.feign.GmallSmsClient;
@@ -51,6 +51,8 @@ public class CartServiceImpl implements CartService {
     private CartAsyncService cartAsyncService;
 
     private static final String KEY_PREFIX = "cart:info:";
+
+    private static final String PRICE_PREFIX = "cart:price:";
 
     /**
      * 根据skuId查询购物车是否有该商品
@@ -120,11 +122,13 @@ public class CartServiceImpl implements CartService {
             }
             //商品刚加入购物车时，默认为选中状态
             cart.setCheck(true);
-            //使用异步调用，把保存购物车到数据库
+            //使用异步调用，保存购物车到数据库
             //this.cartMapper.insert(cart);
             this.cartAsyncService.saveCart(cart);
+            // 缓存实时价格 以skuId作为最后一个后缀
+            this.redisTemplate.opsForValue().set(PRICE_PREFIX + skuId, skuEntity.getPrice().toString());
         }
-        //购物车商品更新，或商品添加到购物车
+        //购物车商品更新或商品添加到购物车
         hashOps.put(skuId, JSON.toJSONString(cart));
     }
 
@@ -187,7 +191,12 @@ public class CartServiceImpl implements CartService {
         if (!CollectionUtils.isEmpty(unloginCartJsons)) {
             //反序列化为List<Cart>集合
             unloginCarts = unloginCartJsons.stream().map(cartJson -> {
-                return JSON.parseObject(cartJson.toString(), Cart.class);
+                Cart cart = JSON.parseObject(cartJson.toString(), Cart.class);
+                //这里未登录状态下的加入购物车，只包含了加入时的价格
+                //查询实时价格并设置
+                String currentPriecString = this.redisTemplate.opsForValue().get(PRICE_PREFIX + cart.getSkuId());
+                cart.setCurrentPrice(new BigDecimal(currentPriecString));
+                return cart;
             }).collect(Collectors.toList());
         }
         //2 获取登陆状态，未登录直接返回
@@ -227,7 +236,12 @@ public class CartServiceImpl implements CartService {
             return null;
         }
         return loginCartJsons.stream().map(loginCartJson -> {
-            return JSON.parseObject(loginCartJson.toString(), Cart.class);
+            Cart cart = JSON.parseObject(loginCartJson.toString(), Cart.class);
+            //this.redisTemplate.delete(unloginPriceKey.toString()); TODO
+            //设置实时价格
+            String currentPricesString = this.redisTemplate.opsForValue().get(PRICE_PREFIX + cart.getSkuId());
+            cart.setCurrentPrice(new BigDecimal(currentPricesString));
+            return cart;
         }).collect(Collectors.toList());
     }
 
@@ -244,12 +258,15 @@ public class CartServiceImpl implements CartService {
         if (hashOps.hasKey(cart.getSkuId().toString())) {
             String cartJson = hashOps.get(cart.getSkuId().toString()).toString();
             BigDecimal count = cart.getCount();
-            if (count.intValue() > 0){
+            if (count.intValue() > 0) {
                 cart = JSON.parseObject(cartJson, Cart.class);
                 cart.setCount(count);
+                //修改数量时，设置实时价格
+                String currentPrice = this.redisTemplate.opsForValue().get(PRICE_PREFIX + cart.getSkuId());
+                cart.setCurrentPrice(new BigDecimal(currentPrice));
                 this.cartAsyncService.updateCartByUserIdAndSkuId(cart);
                 hashOps.put(cart.getSkuId().toString(), JSON.toJSONString(cart));
-            }else {
+            } else {
                 this.cartAsyncService.deleteByUserIdAndSkuId(userId, cart.getSkuId());
                 hashOps.delete(cart.getSkuId().toString());
             }
@@ -268,5 +285,22 @@ public class CartServiceImpl implements CartService {
             this.cartAsyncService.deleteByUserIdAndSkuId(userId, skuId);
             hashOps.delete(skuId.toString());
         }
+    }
+
+    /**
+     *  查询用户选中的购物车
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Cart> queryCheckedCarts(Long userId) {
+        BoundHashOperations<String, Object, Object> hashOps = this.redisTemplate.boundHashOps(KEY_PREFIX + userId);
+        //查询用户选中的购物车
+        List<Object> cartJsons = hashOps.values();
+        if (CollectionUtils.isEmpty(cartJsons)) {
+            return null;
+        }
+        List<Cart> carts = cartJsons.stream().map(cartJson -> JSON.parseObject(cartJson.toString(), Cart.class)).filter(Cart::getCheck).collect(Collectors.toList());
+        return carts;
     }
 }

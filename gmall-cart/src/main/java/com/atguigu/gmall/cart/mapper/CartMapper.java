@@ -1,6 +1,6 @@
 package com.atguigu.gmall.cart.mapper;
 
-import com.atguigu.gmall.cart.bean.Cart;
+import com.atguigu.gmall.cart.api.entiy.Cart;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

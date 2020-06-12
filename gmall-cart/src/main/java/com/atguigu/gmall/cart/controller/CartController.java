@@ -1,6 +1,6 @@
 package com.atguigu.gmall.cart.controller;
 
-import com.atguigu.gmall.cart.bean.Cart;
+import com.atguigu.gmall.cart.api.entiy.Cart;
 import com.atguigu.gmall.cart.service.CartService;
 import com.atguigu.gmall.common.bean.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class CartController {
     @ResponseBody
     public ResponseVo<Object> updateNum(@RequestBody Cart cart){
 
-        this.cartService.updateNum(cart);
+       this.cartService.updateNum(cart);
         return ResponseVo.ok();
     }
 
@@ -71,6 +71,13 @@ public class CartController {
         System.out.println("controller.test方法结束执行！！！" + (System.currentTimeMillis() - now));
 
         return "hello cart!";
+    }
+
+    @GetMapping("check/{userId}")
+    @ResponseBody
+    public ResponseVo<List<Cart>> queryCheckedCarts(@PathVariable("userId")Long userId){
+        List<Cart> carts = this.cartService.queryCheckedCarts(userId);
+        return ResponseVo.ok(carts);
     }
 
 }
