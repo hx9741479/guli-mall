@@ -15,8 +15,8 @@ public class OrderController {
 
     @GetMapping("confirm")
     public ResponseVo<OrderConfirmVo> confirm(){
-
         OrderConfirmVo confirmVo = this.orderService.confirm();
+
         return ResponseVo.ok(confirmVo);
     }
 }

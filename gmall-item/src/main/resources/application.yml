@@ -25,3 +25,10 @@ feign:
   sentinel:
     enabled: true
 
+
+threadPoll:
+  corePoolSize: 100
+  maximumPoolSize: 200
+  keepAliveTime: 60
+  workQueue: 1000
+
