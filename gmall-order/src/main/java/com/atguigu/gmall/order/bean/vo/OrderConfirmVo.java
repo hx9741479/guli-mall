@@ -1,5 +1,6 @@
-package com.atguigu.gmall.order.vo;
+package com.atguigu.gmall.order.bean.vo;
 
+import com.atguigu.gmall.order.api.entity.OrderItemVo;
 import com.atguigu.gmall.ums.api.vo.UserAddressEntity;
 import lombok.Data;
 
@@ -19,4 +20,5 @@ public class OrderConfirmVo { //结算页面的确认页面，用户确认信息
 
     //  防重的唯一标识
     private String orderToken;
+
 }

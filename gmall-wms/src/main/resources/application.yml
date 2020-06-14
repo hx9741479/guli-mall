@@ -19,6 +19,7 @@ spring:
 
   redis:
     host: 192.168.181.128:6379
+    password: 123456
 
   zipkin:
     base-url: http://localhost:9411
@@ -29,13 +30,12 @@ spring:
       probability: 1
 
 mybatis-plus:
-  mapper-locations: classpath:mapper/wms/*.xml  # 读取映射文件
+  mapper-locations: classpath:mapper/wms/*.xml
   type-aliases-package: com.atguigu.gmall.wms.entity
   global-config:
     db-config:
-      id-type: auto  # 默认使用数据库自增
+      id-type: auto
 
-# 开启fegin 整合 sentinel 实现服务熔断的支持
 feign:
   sentinel:
     enabled: true

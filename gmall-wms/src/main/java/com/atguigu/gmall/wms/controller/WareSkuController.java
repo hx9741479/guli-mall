@@ -5,6 +5,7 @@ import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.common.bean.ResponseVo;
 import com.atguigu.gmall.wms.entity.WareSkuEntity;
 import com.atguigu.gmall.wms.service.WareSkuService;
+import com.atguigu.gmall.wms.vo.SkuLockVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -89,6 +90,17 @@ public class WareSkuController {
 		wareSkuService.removeByIds(ids);
 
         return ResponseVo.ok();
+    }
+
+    /**
+     *  检查和锁定库存
+     * @param lockVOS
+     * @return
+     */
+    @PostMapping("check/lock")
+    public ResponseVo<List<SkuLockVO>> checkAndLock(@RequestBody List<SkuLockVO> lockVOS){
+        List<SkuLockVO> skuLockVOS = this.wareSkuService.checkAndLock(lockVOS);
+        return ResponseVo.ok(skuLockVOS);
     }
 
 }

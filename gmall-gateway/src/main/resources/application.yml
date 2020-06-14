@@ -2,51 +2,46 @@ server:
   port: 8888
 spring:
   cloud:
-    nacos:
-      discovery:
-        server-addr: localhost:8848
     gateway:
       routes:
-        - id: pms-route # 商品管理路由
+        - id: pms-route
           uri: lb://pms-service
           predicates:
             - Path=/pms/**
-        - id: oms-route # 订单管理路由
-          uri: lb://oms-service
-          predicates:
-            - Path=/oms/**
-        - id: ums-route # 用户管理路由
-          uri: lb://ums-service
-          predicates:
-            - Path=/ums/**
-        - id: wms-route # 仓库管理路由
-          uri: lb://wms-service
-          predicates:
-            - Path=/wms/**
-        - id: sms-route # 营销管理路由
+        - id: sms-route
           uri: lb://sms-service
           predicates:
             - Path=/sms/**
-        - id: search-route # 网关路由
+        - id: ums-route
+          uri: lb://ums-service
+          predicates:
+            - Path=/ums/**
+        - id: wms-route
+          uri: lb://wms-service
+          predicates:
+            - Path=/wms/**
+        - id: oms-route
+          uri: lb://oms-service
+          predicates:
+            - Path=/oms/**
+        - id: search-route # Host可以根据域名判断请求是否进入该路由
           uri: lb://search-service
           predicates:
             - Host=search.gmall.com
-        - id: index-route1 # 首页的同步请求路由
+        - id: index-route1 # 同步跳转后台服务
           uri: lb://index-service
           predicates:
-            - Host=www.gmall.com
-#          filters:
-#            - Auth=/
-          # - Path=/index/**  如果写在一个里面，他们的关系是and关系
-        - id: index-route2 # 首页的异步请求路由
+            - Host=www.gmall.com, gmall.com
+          #  - Path=/index/**  如果写在这里，两个断言之间是and关系
+        - id: index-route2 # 异步获取数据的路由
           uri: lb://index-service
           predicates:
             - Path=/index/**
         - id: item-route
           uri: lb://item-service
           predicates:
-            - Path=/item/**
-        - id: auth-route # 单点登陆路由
+            - Host=item.gmall.com
+        - id: auth-route
           uri: lb://auth-service
           predicates:
             - Host=sso.gmall.com
@@ -54,18 +49,31 @@ spring:
           uri: lb://cart-service
           predicates:
             - Host=cart.gmall.com
+        #          filters: 即使未登录也可以添加购物车
+        #            - Auth=/
         - id: order-route
           uri: lb://order-service
           predicates:
             - Host=order.gmall.com
+          filters:
+            - Auth=/
+        - id: payment-route
+          uri: lb://payment-service
+          predicates:
+            - Host=payment.gmall.com
+          filters:
+            - Auth=/pay.html,/alipay.html
+        - id: payment-route
+          uri: lb://payment-service
+          predicates:
+            - Path=/pay/**
       x-forwarded:
-        enabled: true
-  redis:
-    host: 192.168.181.128
-    password: 123456
-
+        host-enabled: true
+    nacos:
+      discovery:
+        server-addr: localhost:8848
 auth:
-  jwt: # 请自己完成配置到配置中心
+  jwt:
     pubKeyPath: E:\workspace\java\guli-mall-server\rsa.pub
     cookieName: GMALL-TOKEN
 

@@ -31,7 +31,7 @@ public interface GmallUmsApi {
      * @param id
      * @return
      */
-    @GetMapping("{id}")
+    @GetMapping("ums/user/{id}")
     ResponseVo<UserEntity> queryUserById(@PathVariable("id") Long id);
 
 
